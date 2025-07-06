@@ -1,0 +1,65 @@
+{% extends 'books/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<style>
+    .signup-box {
+        max-width: 500px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .signup-box h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: #0d6efd;
+        color: white;
+        padding: 15px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .form-text-muted {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: -10px;
+        margin-bottom: 15px;
+    }
+
+    .btn-signup {
+        width: 100%;
+        padding: 10px;
+        font-weight: bold;
+    }
+</style>
+
+<div class="signup-box">
+    <h2>Create an Account</h2>
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <div class="form-text-muted">{{ field.help_text|striptags }}</div>
+                {% endif %}
+                {% if field.errors %}
+                    <div class="text-danger small">{{ field.errors|striptags }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary btn-signup">Sign Up</button>
+    </form>
+
+    <div class="text-center mt-3">
+        Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </div>
+</div>
+{% endblock %}
